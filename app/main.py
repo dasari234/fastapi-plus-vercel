@@ -23,7 +23,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:5174",
-        "https://fastapi-plus-vercel.vercel.app",
+        "https://react-vercel-g4vy.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -61,7 +61,16 @@ async def debug_exception_handler(
         },
     )
 
-
+@app.get("/")
+def read_root():
+    return {
+        "service": "FastAPI",
+        "status": "running",
+        "docs": "/docs",
+        "health": "/health",
+        "api": "/api/v1",
+    }
+    
 @app.get("/health")
 def health_check():
     return {
