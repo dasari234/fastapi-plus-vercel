@@ -2,6 +2,7 @@ import traceback
 from pathlib import Path
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
@@ -35,7 +36,16 @@ def read_root(request: Request):
         {"request": request}
     )
 
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5174",
+        "https://your-react-app.vercel.app",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 2. Add an explicit error catcher to expose the full hidden traceback in the console
 @app.exception_handler(Exception)
